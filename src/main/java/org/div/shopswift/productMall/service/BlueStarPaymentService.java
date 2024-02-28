@@ -7,6 +7,7 @@ import org.div.shopswift.productMall.dto.*;
 import org.div.shopswift.utils.AES256CBCUtils;
 import org.div.shopswift.utils.BlueStarUtils;
 import org.div.shopswift.utils.SHA256Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -28,16 +29,12 @@ public class BlueStarPaymentService {
     private String mid;
     @Value(value = "${notifyURL}")
     private String notifyURL;
-    private RestTemplate restTemplate = new RestTemplate();
-    private ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private RestTemplate restTemplate ;
+    @Autowired
+    private ObjectMapper objectMapper ;
 
-    public String getSHAEncrypt() {
-        try {
-            return AES256CBCUtils.encrypt(mid, key, iv);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     /**
      * 生成訂單
